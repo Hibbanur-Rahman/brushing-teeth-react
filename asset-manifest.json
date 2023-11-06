@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/brushing-teeth-react/static/css/main.95390c3a.css",
+    "main.js": "/brushing-teeth-react/static/js/main.12d03055.js",
+    "static/js/787.b87bc02e.chunk.js": "/brushing-teeth-react/static/js/787.b87bc02e.chunk.js",
+    "static/media/pageImg-3.png": "/brushing-teeth-react/static/media/pageImg-3.7efc93b1b49fe8448335.png",
+    "static/media/pageImg-2.png": "/brushing-teeth-react/static/media/pageImg-2.802749edb43fcaeb9ebd.png",
+    "static/media/pageImg-1.png": "/brushing-teeth-react/static/media/pageImg-1.2fd47fb4f7278b36a043.png",
+    "static/media/option5.png": "/brushing-teeth-react/static/media/option5.8b4cbcb8cdf50aca28e4.png",
+    "static/media/option3.png": "/brushing-teeth-react/static/media/option3.7ccfbd084c269b0db0f5.png",
+    "static/media/option4.png": "/brushing-teeth-react/static/media/option4.d9acf3090141a535a8f8.png",
+    "static/media/option6.png": "/brushing-teeth-react/static/media/option6.b3770b76f0c2acdc5b4b.png",
+    "static/media/right arrow.png": "/brushing-teeth-react/static/media/right arrow.476b4c50ee8a0a03bdab.png",
+    "static/media/option1.png": "/brushing-teeth-react/static/media/option1.c024f25857261430979e.png",
+    "static/media/understand.png": "/brushing-teeth-react/static/media/understand.511b3e3a3f760f011a82.png",
+    "static/media/option2.png": "/brushing-teeth-react/static/media/option2.e00b8160623c47ea838c.png",
+    "index.html": "/brushing-teeth-react/index.html",
+    "main.95390c3a.css.map": "/brushing-teeth-react/static/css/main.95390c3a.css.map",
+    "main.12d03055.js.map": "/brushing-teeth-react/static/js/main.12d03055.js.map",
+    "787.b87bc02e.chunk.js.map": "/brushing-teeth-react/static/js/787.b87bc02e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.95390c3a.css",
+    "static/js/main.12d03055.js"
+  ]
+}
