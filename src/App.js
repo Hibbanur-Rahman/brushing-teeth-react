@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './style.css';
 import option1 from './images/option1.png';
 import option2 from './images/option2.png';
@@ -15,17 +15,30 @@ import understand from './images/understand.png';
 
 import rightArrow from './images/right arrow.png';
 
+import winGifPoper from './win.gif';
+import loseGif from './emoji-yuck.gif';
+import winGifemoji from './WS2k.gif'
+
+
+import awesomSound from './awesome.mp3';
+import yuckSound from './yucky.mp3';
+
 
 function App() {
   const FirstSlide = useRef(null);
   const SecondSlide = useRef(null);
   const ThirdSlide = useRef(null);
+  const awesomeSoundId=useRef(null);
+  const yuckSoundId=useRef(null);
 
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [clickCount, setClickCount] = useState(1);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItemsIndex, setSelectedItemsIndex] = useState([]);
+  const [shuffledIndices, setShuffledIndices] = useState([]);
+  const [winFlag,setWinFlag]=useState(false);
+  const [loseFlag,setLoseFlag]=useState(false);
   // const [feedback, setFeedback] = useState('');
 
   const images = [
@@ -38,11 +51,6 @@ function App() {
     { src: option6 }
   ];
 
-  const handleImageClick = (item) => {
-    if (!selectedItems.includes(item)) {
-      setSelectedItems([...selectedItems, item]);
-    }
-  };
 
   const handleNext = () => {
     setActiveSlide((activeSlide + 1) % 3);
@@ -77,14 +85,65 @@ function App() {
 
   const handleNumberingClick = (e) => {
     console.log(e.currentTarget.childNodes[0].childNodes[0])
-    if( e.currentTarget.childNodes[0].childNodes[0].innerHTML==''){
+    if (e.currentTarget.childNodes[0].childNodes[0].innerHTML == '') {
       setClickCount(clickCount + 1);
-      e.currentTarget.childNodes[0].childNodes[0].innerHTML=clickCount;
+      e.currentTarget.childNodes[0].childNodes[0].innerHTML = clickCount;
+
     }
 
   }
 
-  
+  // Function to generate a random integer within a given range
+  const getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
+
+  // Function to shuffle an array without repetitions
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = getRandomInt(0, i + 1);
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Swap elements
+    }
+    return shuffled;
+  };
+
+  useEffect(() => {
+    // Generate a shuffled sequence of indices
+    const shuffledIndices = shuffleArray([...Array(images.length).keys()]);
+    setShuffledIndices(shuffledIndices);
+  }, []); // This effect runs once when the component mounts
+
+
+  const handleImageClick = (index) => {
+    if (!selectedItemsIndex.includes(index)) {
+      setSelectedItemsIndex([...selectedItemsIndex, index]);
+    }
+  };
+
+  const handleSubmit=()=>{
+    if(selectedItemsIndex.length!=6){
+      alert('you should complete the game');
+    }
+    else{
+      var flag=0;
+      for(var i=0;i<selectedItemsIndex.length;i++){
+          if(selectedItemsIndex[i]!=i){
+            setLoseFlag(true);
+            yuckSoundId.current.play();
+           
+            flag=1;
+          }
+      }
+      if(flag===0){
+        setWinFlag(true);
+        awesomeSoundId.current.play();
+      }
+    }
+   
+    console.log("loseflag",loseFlag);
+    console.log("win flag",winFlag);
+  }
 
   return (
     <div classname="App">
@@ -101,13 +160,13 @@ function App() {
       </div>
       <div className="container">
         <div className={`sidebar ${isSidebarOpen ? 'sidebarOpen' : 'sidebarClose'}`}>
-          <div className="pageImg"  onClick={()=>handleSidebarPagingSelection(0)}>
+          <div className="pageImg" onClick={() => handleSidebarPagingSelection(0)}>
             <img src={pageImg1} alt />
           </div>
-          <div className="pageImg" onClick={()=>handleSidebarPagingSelection(1)}>
+          <div className="pageImg" onClick={() => handleSidebarPagingSelection(1)}>
             <img src={pageImg2} alt />
           </div>
-          <div className="pageImg" onClick={()=>handleSidebarPagingSelection(2)}>
+          <div className="pageImg" onClick={() => handleSidebarPagingSelection(2)}>
             <img src={pageImg3} alt />
           </div>
         </div>
@@ -169,27 +228,38 @@ function App() {
           </div>
           <div className={`third another ${activeSlide === 2 ? '' : 'hide'}`} onClick={HandleRemoveSidebar} ref={ThirdSlide}>
             <h1>choose the correct Sequence</h1>
-            <audio id="awesomeSound">
-              <source src="awesome.mp3" type="audio/mpeg" />
+            <audio id="awesomeSound" ref={awesomeSoundId}>
+              <source src={awesomSound} type="audio/mpeg" />
             </audio>
-            <audio id="yuckySound">
-              <source src="yucky.mp3" type="audio/mpeg" />
+            <audio id="yuckySound" ref={yuckSoundId}>
+              <source src={yuckSound} type="audio/mpeg" />
             </audio>
-            <img id="gif" src="./win.gif " alt="WS2k " className="hide" />
-            <img id="lose" src="./emoji-yuck.gif " alt="lose" className="lose hide" />
-            <img id="win" src="./WS2k.gif" alt="win" className="win hide" />
+            <img id="gif" src={winGifPoper} alt="WS2k " className={`win ${winFlag?'':'hide'}`} />
+            <img id="lose" src={loseGif} alt="lose" className={`lose ${loseFlag?'':'hide'}`} />
+            <img id="win" src={winGifemoji} alt="win" className={`win ${winFlag?'':'hide'}`} />
             <div className="options" >
-              {images.map((name, index) => (
+              {shuffledIndices.map((index, i) => (
                 <div className="item" key={index} value={index} onClick={handleNumberingClick}>
                   <div className="num">
                     <h1></h1>
                   </div>
-                  <img src={name.src} alt={`option${index + 1}`} />
+                  <img key={i} src={images[index].src} alt={`Image ${i + 1}`} onClick={() => handleImageClick(index)} />
                 </div>
+
               ))}
             </div>
-            <div className="show-selections" />
-            <button className="submit">submit</button>
+            <div className="show-selections" >
+              {selectedItemsIndex.map((index, i) => (
+                <div className="show-item">
+                  <img src={images[index].src} alt={`image${i+1}`} />
+                  <div className={`arrow ${i==5?'hide':''}`}>
+                    <img src={rightArrow} alt="arrow" />
+                  </div>
+                </div>
+
+              ))}
+            </div>
+            <button className="submit" onClick={handleSubmit}>submit</button>
           </div>
         </div>
       </div>
