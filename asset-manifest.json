@@ -1,11 +1,15 @@
 {
   "files": {
     "main.css": "/brushing-teeth-react/static/css/main.95390c3a.css",
-    "main.js": "/brushing-teeth-react/static/js/main.12d03055.js",
+    "main.js": "/brushing-teeth-react/static/js/main.79a2e765.js",
     "static/js/787.b87bc02e.chunk.js": "/brushing-teeth-react/static/js/787.b87bc02e.chunk.js",
+    "static/media/win.gif": "/brushing-teeth-react/static/media/win.eedbfbee787d962a144c.gif",
     "static/media/pageImg-3.png": "/brushing-teeth-react/static/media/pageImg-3.7efc93b1b49fe8448335.png",
     "static/media/pageImg-2.png": "/brushing-teeth-react/static/media/pageImg-2.802749edb43fcaeb9ebd.png",
+    "static/media/emoji-yuck.gif": "/brushing-teeth-react/static/media/emoji-yuck.20276c1b6995c393fb34.gif",
     "static/media/pageImg-1.png": "/brushing-teeth-react/static/media/pageImg-1.2fd47fb4f7278b36a043.png",
+    "static/media/WS2k.gif": "/brushing-teeth-react/static/media/WS2k.822c5e4ad5a35d624ef9.gif",
+    "static/media/awesome.mp3": "/brushing-teeth-react/static/media/awesome.5f1fee46481f6a9e2585.mp3",
     "static/media/option5.png": "/brushing-teeth-react/static/media/option5.8b4cbcb8cdf50aca28e4.png",
     "static/media/option3.png": "/brushing-teeth-react/static/media/option3.7ccfbd084c269b0db0f5.png",
     "static/media/option4.png": "/brushing-teeth-react/static/media/option4.d9acf3090141a535a8f8.png",
@@ -14,13 +18,14 @@
     "static/media/option1.png": "/brushing-teeth-react/static/media/option1.c024f25857261430979e.png",
     "static/media/understand.png": "/brushing-teeth-react/static/media/understand.511b3e3a3f760f011a82.png",
     "static/media/option2.png": "/brushing-teeth-react/static/media/option2.e00b8160623c47ea838c.png",
+    "static/media/yucky.mp3": "/brushing-teeth-react/static/media/yucky.70bcf1d61a0acab0d320.mp3",
     "index.html": "/brushing-teeth-react/index.html",
     "main.95390c3a.css.map": "/brushing-teeth-react/static/css/main.95390c3a.css.map",
-    "main.12d03055.js.map": "/brushing-teeth-react/static/js/main.12d03055.js.map",
+    "main.79a2e765.js.map": "/brushing-teeth-react/static/js/main.79a2e765.js.map",
     "787.b87bc02e.chunk.js.map": "/brushing-teeth-react/static/js/787.b87bc02e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.95390c3a.css",
-    "static/js/main.12d03055.js"
+    "static/js/main.79a2e765.js"
   ]
 }
