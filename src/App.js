@@ -28,8 +28,8 @@ function App() {
   const FirstSlide = useRef(null);
   const SecondSlide = useRef(null);
   const ThirdSlide = useRef(null);
-  const awesomeSoundId=useRef(null);
-  const yuckSoundId=useRef(null);
+  const awesomeSoundId = useRef(null);
+  const yuckSoundId = useRef(null);
 
 
   const [activeSlide, setActiveSlide] = useState(0);
@@ -37,9 +37,10 @@ function App() {
   const [clickCount, setClickCount] = useState(1);
   const [selectedItemsIndex, setSelectedItemsIndex] = useState([]);
   const [shuffledIndices, setShuffledIndices] = useState([]);
-  const [winFlag,setWinFlag]=useState(false);
-  const [loseFlag,setLoseFlag]=useState(false);
-  // const [feedback, setFeedback] = useState('');
+  const [winFlag, setWinFlag] = useState(false);
+  const [loseFlag, setLoseFlag] = useState(false);
+
+  const synth = window.speechSynthesis;
 
   const images = [
 
@@ -59,15 +60,6 @@ function App() {
   const handleBack = () => {
     setActiveSlide((activeSlide - 1 + 3) % 3);
   };
-
-  // const handleSubmit = () => {
-  //   if (selectedItems.length === images.length && selectedItems.every((item, index) => item === index + 1)) {
-  //     setFeedback('You are a winner');
-  //   } else {
-  //     setFeedback('You lost');
-  //   }
-  // };
-
 
 
   const toggleSidebar = () => {
@@ -121,30 +113,42 @@ function App() {
     }
   };
 
-  const handleSubmit=()=>{
-    if(selectedItemsIndex.length!=6){
+  const handleSubmit = () => {
+
+    if (selectedItemsIndex.length != 6) {
       alert('you should complete the game');
     }
-    else{
-      var flag=0;
-      for(var i=0;i<selectedItemsIndex.length;i++){
-          if(selectedItemsIndex[i]!=i){
-            setLoseFlag(true);
-            yuckSoundId.current.play();
-           
-            flag=1;
-          }
+    else {
+      var flag = 0;
+      for (var i = 0; i < selectedItemsIndex.length; i++) {
+        if (selectedItemsIndex[i] != i) {
+          setLoseFlag(true);
+          yuckSoundId.current.play();
+
+          flag = 1;
+        }
       }
-      if(flag===0){
+      if (flag === 0) {
         setWinFlag(true);
         awesomeSoundId.current.play();
       }
     }
-   
-    console.log("loseflag",loseFlag);
-    console.log("win flag",winFlag);
   }
 
+  const handleSpeech = (e) => {
+    handleItemBorder(e);
+
+    console.log(e.currentTarget.parentNode.childNodes[2].innerHTML)
+    const textExample = e.currentTarget.parentNode.childNodes[2].innerHTML;
+    if (synth.speaking) {
+      return;
+    }
+    const utterance = new SpeechSynthesisUtterance(textExample);
+    synth.speak(utterance);
+  }
+  const handleItemBorder = (e) => {
+    e.currentTarget.className += ' itemClicked';
+  }
   return (
     <div classname="App">
       <div className="nav-toggel" onClick={toggleSidebar}>
@@ -180,49 +184,49 @@ function App() {
             <h1>I Brush my teeth</h1>
             <div className="listing">
               <div className="item-2">
-                <div className="image">
+                <div className="image" onClick={handleSpeech}>
                   <img src={option1} alt={1} />
                 </div>
                 <p>1</p>
                 <p>I wet the brush with water</p>
               </div>
               <div className="item-2" >
-                <div className="image">
+                <div className="image" onClick={handleSpeech}>
                   <img src={option2} alt={2} />
                 </div>
                 <p>2</p>
                 <p>I put some toothpaste on the brush</p>
               </div>
               <div className="item-2" >
-                <div className="image">
+                <div className="image" onClick={handleSpeech}>
                   <img src={option3} alt={3} />
                 </div>
                 <p>3</p>
                 <p>I brush my teeth well: up and down and also back to front</p>
               </div>
               <div className="item-2">
-                <div className="image">
+                <div className="image" onClick={handleSpeech}>
                   <img src={option4} alt={4} />
                 </div>
                 <p>4</p>
                 <p>I rinse my mouth with water</p>
               </div>
               <div className="item-2">
-                <div className="image">
+                <div className="image" onClick={handleSpeech}>
                   <img src={option5} alt={5} />
                 </div>
                 <p>5</p>
                 <p>I spit the water out into sink</p>
               </div>
               <div className="item-2">
-                <div className="image">
+                <div className="image" onClick={handleSpeech}>
                   <img src={option6} alt={6} />
                 </div>
                 <p>6</p>
                 <p>Now my teeth are clean</p>
               </div>
             </div>
-            <div className="understand item-2 image">
+            <div className="understand item-2 image" onClick={handleSpeech}>
               <img src={understand} alt="understand" />
             </div>
           </div>
@@ -234,9 +238,9 @@ function App() {
             <audio id="yuckySound" ref={yuckSoundId}>
               <source src={yuckSound} type="audio/mpeg" />
             </audio>
-            <img id="gif" src={winGifPoper} alt="WS2k " className={`win ${winFlag?'':'hide'}`} />
-            <img id="lose" src={loseGif} alt="lose" className={`lose ${loseFlag?'':'hide'}`} />
-            <img id="win" src={winGifemoji} alt="win" className={`win ${winFlag?'':'hide'}`} />
+            <img id="gif" src={winGifPoper} alt="WS2k " className={`win ${winFlag ? '' : 'hide'}`} />
+            <img id="lose" src={loseGif} alt="lose" className={`lose ${loseFlag ? '' : 'hide'}`} />
+            <img id="win" src={winGifemoji} alt="win" className={`win ${winFlag ? '' : 'hide'}`} />
             <div className="options" >
               {shuffledIndices.map((index, i) => (
                 <div className="item" key={index} value={index} onClick={handleNumberingClick}>
@@ -251,8 +255,8 @@ function App() {
             <div className="show-selections" >
               {selectedItemsIndex.map((index, i) => (
                 <div className="show-item">
-                  <img src={images[index].src} alt={`image${i+1}`} />
-                  <div className={`arrow ${i==5?'hide':''}`}>
+                  <img src={images[index].src} alt={`image${i + 1}`} />
+                  <div className={`arrow ${i == 5 ? 'hide' : ''}`}>
                     <img src={rightArrow} alt="arrow" />
                   </div>
                 </div>
